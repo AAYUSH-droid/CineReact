@@ -27,9 +27,24 @@ function App() {
     getMovieRequest(searchValue);
   }, [searchValue]);
 
+  // useEffect(() => {
+  //   const movieFavourites = JSON.parse(
+  //     localStorage.getItem('react-movie-app-favourites')
+  //   );
+
+  //   if (movieFavourites) {
+  //     setFavourites(movieFavourites);
+  //   }
+  // } , []);
+
+  const saveToLocalStorage = (items) => {
+    localStorage.setItem('react-movie-app-favourites', JSON.stringify(items));
+  };
+
   const addFavouritesmovie = (movie) => {
     const newFavouritesList = [...favourites, movie];
     setFavourites(newFavouritesList);
+    saveToLocalStorage(newFavouritesList);
   };
 
   const removeFavouritesMovie = (movie) => {
@@ -37,7 +52,9 @@ function App() {
       (favourite) => favourite.imdbID !== movie.imdbID
     );
     setFavourites(newFavouriteList);
+    saveToLocalStorage(newFavouriteList);
   };
+
   return (
     <div className="container-fluid movie-app">
       <div className="row d-flex align-items-center mt-4 mb-4">
@@ -66,3 +83,12 @@ function App() {
 }
 
 export default App;
+
+// useEffect(() => {
+//   const movieFavourites = JSON.parse(
+//     localStorage.getItem('react-movie-app-favourites');
+//     if(movieFavourites){
+//       setFavourites(movieFavourites);
+//     }
+//   );
+//  }, []);
